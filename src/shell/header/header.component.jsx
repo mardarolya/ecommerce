@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.styles.scss';
 
-const Header = ({ user, handleSignup }) => {
+const Header = ({ user, handleSignOut }) => {
   return (
     <div className='header'>
       <Link to='/' className='logo-container'>
@@ -17,7 +17,7 @@ const Header = ({ user, handleSignup }) => {
           Contact
         </Link>
         {user ? (
-          <button type='button' className='option' onClick={handleSignup}>
+          <button type='button' className='option' onClick={handleSignOut}>
             Sign out
           </button>
         ) : (

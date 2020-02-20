@@ -5,6 +5,7 @@ import ShopPage from './pages/shop/shop-page.component';
 import Header from './shell/header/header.component.jsx';
 import RegistrationPage from './pages/registration/registration-page.component';
 import { Route, Switch } from 'react-router-dom';
+import { signOut, createUserProfileDocument } from './services/auth.service';
 import './App.css';
 
 class App extends Component {
@@ -19,8 +20,22 @@ class App extends Component {
   authUnsubscription = null;
 
   componentDidMount() {
-    this.authUnsubscription = auth.onAuthStateChanged(user => {
-      this.setState({ user });
+    this.authUnsubscription = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        userRef.onSnapshot(snapShot => {
+          this.setState({
+            user: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          });
+        });
+      } else {
+        this.setState({
+          user: null
+        });
+      }
     });
   }
 
@@ -28,14 +43,14 @@ class App extends Component {
     this.authUnsubscription();
   }
 
-  handleSignup = () => {
-    auth.signOut();
+  handleSignOut = () => {
+    signOut();
   };
 
   render() {
     return (
       <div>
-        <Header user={this.state.user} handleSignup={this.handleSignup} />
+        <Header user={this.state.user} handleSignOut={this.handleSignOut} />
         <Switch>
           <Route exact path='/signin' component={RegistrationPage} />
           <Route exact path='/shop' component={ShopPage} />

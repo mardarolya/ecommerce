@@ -1,38 +1,43 @@
 import React, { Component } from 'react';
 import Input from 'shared/components/input/input.component';
 import Button from 'shared/components/button/button.component';
+import { signUp } from 'services/auth.service.js';
 
 import './signup.styles.scss';
+
+const initialState = {
+  displayName: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+};
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      displayName: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
-    };
+    this.state = initialState;
   }
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
-    this.setState({
-      displayName: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
-    });
+    const { password, confirmPassword } = this.state;
+    if (password !== confirmPassword) {
+      alert('passwords dont match');
+      return;
+    }
+    await signUp(this.state);
+
+    this.setState(initialState);
   };
 
   handleChange = event => {
-    console.log(event.target);
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
 
   render() {
+    const { displayName, email, password, confirmPassword } = this.state;
     return (
       <div className='sign-up'>
         <h2>I don't have an account</h2>
@@ -40,10 +45,10 @@ class SignUp extends Component {
 
         <form onSubmit={this.handleSubmit}>
           <Input
-            type='email'
+            type='text'
             name='displayName'
             label='Display Name'
-            value={this.state.displayName}
+            value={displayName}
             required
             handleChange={this.handleChange}
           />
@@ -52,7 +57,7 @@ class SignUp extends Component {
             type='email'
             name='email'
             label='Email'
-            value={this.state.email}
+            value={email}
             required
             handleChange={this.handleChange}
           />
@@ -60,8 +65,9 @@ class SignUp extends Component {
           <Input
             type='password'
             name='password'
-            value={this.state.password}
+            value={password}
             label='Password'
+            minLength='6'
             required
             handleChange={this.handleChange}
           />
@@ -69,8 +75,9 @@ class SignUp extends Component {
           <Input
             type='password'
             name='confirmPassword'
-            value={this.state.confirmPassword}
+            value={confirmPassword}
             label='Confirm Password'
+            minLength='6'
             required
             handleChange={this.handleChange}
           />
