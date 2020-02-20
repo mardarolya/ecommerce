@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
-import { signInWithGoogle } from 'services/auth.service';
+import { signIn, signInWithGoogle } from 'services/auth.service';
 import Input from 'shared/components/input/input.component';
 import Button from 'shared/components/button/button.component';
 
 import './signin.styles.scss';
 
+const initialState = {
+  email: '',
+  password: ''
+};
+
 class SignIn extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      email: '',
-      password: ''
-    };
+    this.state = initialState;
   }
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
-    this.setState({
-      email: '',
-      password: ''
-    });
+
+    await signIn(this.state);
+    this.setState(initialState);
   };
 
   handleChange = event => {

@@ -43,3 +43,8 @@ export async function signUp(user) {
 export function signOut() {
   auth.signOut();
 }
+
+export async function signIn(user) {
+  const { email, password } = user;
+  auth.signInWithEmailAndPassword(email, password);
+}
