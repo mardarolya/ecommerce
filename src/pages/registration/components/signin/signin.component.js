@@ -29,6 +29,11 @@ class SignIn extends Component {
     this.setState({ [name]: value });
   };
 
+  handleSighInWitGoogle = async () => {
+    await signInWithGoogle();
+    this.setState(initialState);
+  };
+
   render() {
     return (
       <div className='sign-in'>
@@ -59,7 +64,7 @@ class SignIn extends Component {
             type='button'
             google={true}
             label='Sign In With Google'
-            onClick={signInWithGoogle}
+            onClick={this.handleSighInWitGoogle}
           ></Button>
         </form>
       </div>

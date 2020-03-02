@@ -4,7 +4,7 @@ import HomePage from './pages/home/home-page.component';
 import ShopPage from './pages/shop/shop-page.component';
 import HeaderContainer from './shell/header/header.container.jsx';
 import RegistrationPage from './pages/registration/registration-page.component';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { signOut, createUserProfileDocument } from './services/auth.service';
 
 import './App.css';
@@ -40,11 +40,16 @@ class App extends Component {
   };
 
   render() {
+    const { user } = this.props;
     return (
       <div>
         <HeaderContainer handleSignOut={this.handleSignOut} />
         <Switch>
-          <Route exact path='/signin' component={RegistrationPage} />
+          <Route
+            exact
+            path='/signin'
+            render={() => (user ? <Redirect to='/' /> : <RegistrationPage />)}
+          />
           <Route exact path='/shop' component={ShopPage} />
           <Route path='/' component={HomePage} />
         </Switch>
