@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
-import CartIcon from 'pages/cart/components/cart-icon/cart-icon.component';
+import CartIconContainer from 'pages/cart/components/cart-icon/cart-icon.container';
 import CartDropdown from 'pages/cart/components/cart-dropdown/cart-dropdown.component';
 
 import './header.styles.scss';
@@ -45,7 +45,7 @@ class Header extends Component {
               Sign in
             </Link>
           )}
-          <CartIcon handleClick={this.handleToogleBasket} />
+          <CartIconContainer handleClick={this.handleToogleBasket} />
         </div>
         {showDropdownBasket ? <CartDropdown /> : null}
       </div>

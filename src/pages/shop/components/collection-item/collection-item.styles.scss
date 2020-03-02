@@ -1,4 +1,5 @@
 .collection-item {
+  position: relative;
   width: 22%;
   display: flex;
   flex-direction: column;
@@ -11,6 +12,17 @@
     background-size: cover;
     background-position: center;
     margin-bottom: 5px;
+
+    .add-button {
+      display: none;
+    }
+
+    &:hover {
+      opacity: 0.8;
+      .add-button {
+        display: block;
+      }
+    }
   }
 
   .collection-footer {
@@ -28,5 +40,12 @@
     .price {
       width: 10%;
     }
+  }
+
+  .add-button {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 42px;
   }
 }

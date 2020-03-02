@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { auth } from './firebase/firebase.utils';
 import HomePage from './pages/home/home-page.component';
 import ShopPage from './pages/shop/shop-page.component';
-import HeaderContainer from './shell/header/header.container.jsx';
+import HeaderContainer from './shell/header/header.container';
 import RegistrationPage from './pages/registration/registration-page.component';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { signOut, createUserProfileDocument } from './services/auth.service';
